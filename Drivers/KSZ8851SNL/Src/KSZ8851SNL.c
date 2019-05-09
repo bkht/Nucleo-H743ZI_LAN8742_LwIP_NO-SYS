@@ -42,8 +42,8 @@
 #include <gpio.h>
 #include "stm32h7xx_hal.h"
 #include "conf_eth.h"
-#include "ksz8851snl.h"
-#include "ksz8851snl_reg.h"
+#include "KSZ8851SNL.h"
+#include "KSZ8851SNL_reg.h"
 
 /** Network interface identifier. */
 #define IFNAME0								'e'
