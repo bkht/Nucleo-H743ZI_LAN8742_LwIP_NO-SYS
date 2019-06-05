@@ -188,34 +188,60 @@ int main(void)
   /* TCP echo server Init */
   tcp_echoserver_init();
 
+  struct udp_pcb *pcb;
+    struct pbuf *p;
+    err_t err;
+    ip4_addr_t dst_addr;
+    const unsigned short src_port = 12345;
+    const unsigned short dst_port = 12345;
+
+    IP4_ADDR(&dst_addr,192,168,25,100);
+
+    pcb = udp_new();
+    err = udp_bind(pcb, IP_ADDR_ANY, src_port);
+
+    uint32_t cnt = 0;
+    uint32_t t = HAL_GetTick();
+
   /* USER CODE END 2 */
 
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
-  {
-    /* USER CODE END WHILE */
+    {
+      HAL_IWDG_Refresh(&hiwdg1);
 
-	HAL_IWDG_Refresh(&hiwdg1);
+      MX_LWIP_Process();
 
-	MX_LWIP_Process();
+      HAL_Delay(2);
 
-	HAL_Delay(2);
+      /* Read a received packet from the Ethernet buffers and send it
+         to the lwIP for handling */
+      //ethernetif_input(&gnetif);
+      /* Handle timeouts */
+      //sys_check_timeouts();
 
-	/* Read a received packet from the Ethernet buffers and send it
-	   to the lwIP for handling */
-	ethernetif_input(&gnetif);
+      /* UDP */
+      if(HAL_GetTick() - t > 1000)
+        {
+          p = pbuf_alloc(PBUF_TRANSPORT, sizeof(4), PBUF_RAM);
+          *(uint32_t *)p->payload = cnt++;
+          p->len = 4;
+          err = udp_sendto(pcb, p, &dst_addr, dst_port);
+          t = HAL_GetTick();
+          pbuf_free(p);
+        }
 
-	/* Handle timeouts */
-	sys_check_timeouts();
+      /* USER CODE END WHILE */
+
 
 #if LWIP_NETIF_LINK_CALLBACK
-	Ethernet_Link_Periodic_Handle(&gnetif);
+      Ethernet_Link_Periodic_Handle(&gnetif);
 #endif
 
 #if LWIP_DHCP
-	DHCP_Periodic_Handle(&gnetif);
+      DHCP_Periodic_Handle(&gnetif);
 #endif
 
     /* USER CODE BEGIN 3 */
