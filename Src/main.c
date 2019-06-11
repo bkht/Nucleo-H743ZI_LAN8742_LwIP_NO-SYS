@@ -48,9 +48,6 @@
   */
 /* USER CODE END Header */
 
-// MAC in ethernetif.c
-// IP in lwip.c
-
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "adc.h"
@@ -68,12 +65,10 @@
 #include "usb_device.h"
 #include "gpio.h"
 
-#include "app_ethernet.h"
-#include "tcp_echoserver.h"
-
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "tcp_echoserver.h"
+#include "app_ethernet.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -92,8 +87,6 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-struct netif gnetif;
-static void Netif_Config(void);
 
 /* USER CODE BEGIN PV */
 uint32_t msTick = 0;
@@ -121,7 +114,7 @@ uint32_t HAL_GetTicks(void);
   */
 int main(void)
 {
-	/* USER CODE BEGIN 1 */
+  /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */
 
@@ -151,14 +144,13 @@ int main(void)
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
-  MX_USART3_UART_Init();
-  dmc_puts("\n--------------------------------------------------------------------------------\n");
-  dmc_puts("Nucleo-H743ZI LAN8742A LwIP\n");
   MX_GPIO_Init();
   MX_BDMA_Init();
   MX_DMA_Init();
+  MX_USART3_UART_Init();
   MX_RNG_Init();
   MX_IWDG1_Init();
+  MX_LWIP_Init();
   MX_SPI4_Init();
   MX_SPI1_Init();
   MX_I2C4_Init();
@@ -169,20 +161,8 @@ int main(void)
   MX_TIM3_Init();
   MX_UART5_Init();
   MX_RTC_Init();
-//  dmc_puts("MX_FATFS_Init\n");
   MX_FATFS_Init();
-//  dmc_puts("MX_USB_DEVICE_Init\n");
   MX_USB_DEVICE_Init();
-
-  dmc_puts("MX_LWIP_Init\n");
-  MX_LWIP_Init();
-  dmc_puts("Done\n");
-  HAL_Delay(1000);
-
-  dmc_puts("--------------------------------------------------------------------------------\n");
-  uint32_t SystemCoreClockMHz = SystemCoreClock / 1000000;
-  dmc_putstrintstr("SystemCoreClock: ", SystemCoreClockMHz, " MHz\n");     // 400000000 Hz
-
   /* USER CODE BEGIN 2 */
 
   /* TCP echo server Init */
@@ -204,7 +184,6 @@ int main(void)
     uint32_t t = HAL_GetTick();
 
   /* USER CODE END 2 */
-
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
@@ -233,9 +212,6 @@ int main(void)
           pbuf_free(p);
         }
 
-      /* USER CODE END WHILE */
-
-
 #if LWIP_NETIF_LINK_CALLBACK
       Ethernet_Link_Periodic_Handle(&gnetif);
 #endif
@@ -243,6 +219,8 @@ int main(void)
 #if LWIP_DHCP
       DHCP_Periodic_Handle(&gnetif);
 #endif
+
+    /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
   }
@@ -352,10 +330,40 @@ void MPU_Config(void)
 
   /* Disables the MPU */
   HAL_MPU_Disable();
-  /**Initializes and configures the Region and the memory to be protected
+  /**Initializes and configures the Region and the memory to be protected 
   */
   MPU_InitStruct.Enable = MPU_REGION_ENABLE;
   MPU_InitStruct.Number = MPU_REGION_NUMBER0;
+  MPU_InitStruct.BaseAddress = 0x30040000;
+  MPU_InitStruct.Size = MPU_REGION_SIZE_16KB;
+  MPU_InitStruct.SubRegionDisable = 0x0;
+  MPU_InitStruct.TypeExtField = MPU_TEX_LEVEL1;
+  MPU_InitStruct.AccessPermission = MPU_REGION_FULL_ACCESS;
+  MPU_InitStruct.DisableExec = MPU_INSTRUCTION_ACCESS_ENABLE;
+  MPU_InitStruct.IsShareable = MPU_ACCESS_NOT_SHAREABLE;
+  MPU_InitStruct.IsCacheable = MPU_ACCESS_NOT_CACHEABLE;
+  MPU_InitStruct.IsBufferable = MPU_ACCESS_NOT_BUFFERABLE;
+
+  HAL_MPU_ConfigRegion(&MPU_InitStruct);
+  /**Initializes and configures the Region and the memory to be protected 
+  */
+  MPU_InitStruct.Enable = MPU_REGION_ENABLE;
+  MPU_InitStruct.Number = MPU_REGION_NUMBER1;
+  MPU_InitStruct.BaseAddress = 0x30044000;
+  MPU_InitStruct.Size = MPU_REGION_SIZE_16KB;
+  MPU_InitStruct.SubRegionDisable = 0x0;
+  MPU_InitStruct.TypeExtField = MPU_TEX_LEVEL0;
+  MPU_InitStruct.AccessPermission = MPU_REGION_FULL_ACCESS;
+  MPU_InitStruct.DisableExec = MPU_INSTRUCTION_ACCESS_ENABLE;
+  MPU_InitStruct.IsShareable = MPU_ACCESS_NOT_SHAREABLE;
+  MPU_InitStruct.IsCacheable = MPU_ACCESS_CACHEABLE;
+  MPU_InitStruct.IsBufferable = MPU_ACCESS_NOT_BUFFERABLE;
+
+  HAL_MPU_ConfigRegion(&MPU_InitStruct);
+  /**Initializes and configures the Region and the memory to be protected 
+  */
+  MPU_InitStruct.Enable = MPU_REGION_ENABLE;
+  MPU_InitStruct.Number = MPU_REGION_NUMBER2;
   MPU_InitStruct.BaseAddress = 0x30040000;
   MPU_InitStruct.Size = MPU_REGION_SIZE_256B;
   MPU_InitStruct.SubRegionDisable = 0x0;
@@ -365,21 +373,6 @@ void MPU_Config(void)
   MPU_InitStruct.IsShareable = MPU_ACCESS_NOT_SHAREABLE;
   MPU_InitStruct.IsCacheable = MPU_ACCESS_NOT_CACHEABLE;
   MPU_InitStruct.IsBufferable = MPU_ACCESS_BUFFERABLE;
-
-  HAL_MPU_ConfigRegion(&MPU_InitStruct);
-  /**Initializes and configures the Region and the memory to be protected
-  */
-  MPU_InitStruct.Enable = MPU_REGION_ENABLE;
-  MPU_InitStruct.Number = MPU_REGION_NUMBER1;
-  MPU_InitStruct.BaseAddress = 0x30044000;
-  MPU_InitStruct.Size = MPU_REGION_SIZE_16KB;
-  MPU_InitStruct.SubRegionDisable = 0x0;
-  MPU_InitStruct.TypeExtField = MPU_TEX_LEVEL0;
-  MPU_InitStruct.AccessPermission = MPU_REGION_NO_ACCESS;
-  MPU_InitStruct.DisableExec = MPU_INSTRUCTION_ACCESS_ENABLE;
-  MPU_InitStruct.IsShareable = MPU_ACCESS_NOT_SHAREABLE;
-  MPU_InitStruct.IsCacheable = MPU_ACCESS_CACHEABLE;
-  MPU_InitStruct.IsBufferable = MPU_ACCESS_NOT_BUFFERABLE;
 
   HAL_MPU_ConfigRegion(&MPU_InitStruct);
   /* Enables the MPU */

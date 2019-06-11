@@ -277,7 +277,6 @@ void DMA1_Stream2_IRQHandler(void)
   /* USER CODE END DMA1_Stream2_IRQn 1 */
 }
 
-// ----------------------------------------------------------------------------------------------------
 /**
   * @brief This function handles DMA1 stream3 global interrupt.
   */
@@ -292,7 +291,6 @@ void DMA1_Stream3_IRQHandler(void)
   /* USER CODE END DMA1_Stream3_IRQn 1 */
 }
 
-// ----------------------------------------------------------------------------------------------------
 /**
   * @brief This function handles DMA1 stream4 global interrupt.
   */
@@ -335,7 +333,6 @@ void DMA1_Stream6_IRQHandler(void)
   /* USER CODE END DMA1_Stream6_IRQn 1 */
 }
 
-// ----------------------------------------------------------------------------------------------------
 /**
   * @brief This function handles EXTI line[9:5] interrupts.
   */
@@ -394,7 +391,6 @@ void SPI1_IRQHandler(void)
   /* USER CODE END SPI1_IRQn 1 */
 }
 
-// ----------------------------------------------------------------------------------------------------
 /**
   * @brief This function handles SPI2 global interrupt.
   */

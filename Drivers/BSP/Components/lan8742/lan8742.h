@@ -406,6 +406,7 @@ typedef struct
   lan8742_ReadReg_Func   ReadReg; 
   lan8742_GetTick_Func   GetTick;   
 } lan8742_IOCtx_t;  
+
   
 typedef struct 
 {

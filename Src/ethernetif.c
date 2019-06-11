@@ -4,15 +4,45 @@
   * Description        : This file provides code for the configuration
   *                      of the ethernetif.c MiddleWare.
   ******************************************************************************
-  * @attention
+  * This notice applies to any and all portions of this file
+  * that are not between comment pairs USER CODE BEGIN and
+  * USER CODE END. Other portions of this file, whether 
+  * inserted by the user or by software development tools
+  * are owned by their respective copyright owners.
   *
-  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2019 STMicroelectronics International N.V. 
+  * All rights reserved.
   *
-  * This software component is licensed by ST under Ultimate Liberty license
-  * SLA0044, the "License"; You may not use this file except in compliance with
-  * the License. You may obtain a copy of the License at:
-  *                             www.st.com/SLA0044
+  * Redistribution and use in source and binary forms, with or without 
+  * modification, are permitted, provided that the following conditions are met:
+  *
+  * 1. Redistribution of source code must retain the above copyright notice, 
+  *    this list of conditions and the following disclaimer.
+  * 2. Redistributions in binary form must reproduce the above copyright notice,
+  *    this list of conditions and the following disclaimer in the documentation
+  *    and/or other materials provided with the distribution.
+  * 3. Neither the name of STMicroelectronics nor the names of other 
+  *    contributors to this software may be used to endorse or promote products 
+  *    derived from this software without specific written permission.
+  * 4. This software, including modifications and/or derivative works of this 
+  *    software, must execute solely and exclusively on microcontroller or
+  *    microprocessor devices manufactured by or for STMicroelectronics.
+  * 5. Redistribution and use of this software other than as permitted under 
+  *    this license is void and will automatically terminate your rights under 
+  *    this license. 
+  *
+  * THIS SOFTWARE IS PROVIDED BY STMICROELECTRONICS AND CONTRIBUTORS "AS IS" 
+  * AND ANY EXPRESS, IMPLIED OR STATUTORY WARRANTIES, INCLUDING, BUT NOT 
+  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A 
+  * PARTICULAR PURPOSE AND NON-INFRINGEMENT OF THIRD PARTY INTELLECTUAL PROPERTY
+  * RIGHTS ARE DISCLAIMED TO THE FULLEST EXTENT PERMITTED BY LAW. IN NO EVENT 
+  * SHALL STMICROELECTRONICS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, 
+  * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
+  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING 
+  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   *
   ******************************************************************************
   */
@@ -29,7 +59,6 @@
 #include "ethernetif.h"
 #include "lan8742.h"
 #include <string.h>
-#include <dmc_print.h>
 
 /* Within 'USER CODE' section, code will be kept by default at each generation */
 /* USER CODE BEGIN 0 */
@@ -84,8 +113,6 @@ __attribute__((at(0x30040200))) uint8_t Rx_Buff[ETH_RX_DESC_CNT][ETH_MAX_PACKET_
 
 #elif defined ( __GNUC__ ) /* GNU Compiler */ 
 
-// https://community.st.com/s/article/FAQ-Ethernet-not-working-on-STM32H7x3
-// Please check STM32H743ZI_FLASH.ld
 ETH_DMADescTypeDef DMARxDscrTab[ETH_RX_DESC_CNT] __attribute__((section(".RxDecripSection"))); /* Ethernet Rx DMA Descriptors */
 ETH_DMADescTypeDef DMATxDscrTab[ETH_TX_DESC_CNT] __attribute__((section(".TxDecripSection")));   /* Ethernet Tx DMA Descriptors */
 uint8_t Rx_Buff[ETH_RX_DESC_CNT][ETH_MAX_PACKET_SIZE] __attribute__((section(".RxArraySection"))); /* Ethernet Receive Buffers */
@@ -138,7 +165,7 @@ void HAL_ETH_MspInit(ETH_HandleTypeDef* ethHandle)
     __HAL_RCC_ETH1MAC_CLK_ENABLE();
     __HAL_RCC_ETH1TX_CLK_ENABLE();
     __HAL_RCC_ETH1RX_CLK_ENABLE();
-
+  
     /**ETH GPIO Configuration    
     PC1     ------> ETH_MDC
     PA1     ------> ETH_REF_CLK
@@ -160,28 +187,28 @@ void HAL_ETH_MspInit(ETH_HandleTypeDef* ethHandle)
     GPIO_InitStruct.Pin = RMII_REF_CLK_Pin|RMII_MDIO_Pin|RMII_CRS_DV_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH; /* Must be GPIO_SPEED_FREQ_HIGH */
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
     GPIO_InitStruct.Alternate = GPIO_AF11_ETH;
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
     GPIO_InitStruct.Pin = RMII_RXD0_Pin|RMII_RXD1_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH; /* Must be GPIO_SPEED_FREQ_HIGH */
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
     GPIO_InitStruct.Alternate = GPIO_AF11_ETH;
     HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
     GPIO_InitStruct.Pin = RMII_TXD1_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH; /* Must be GPIO_SPEED_FREQ_HIGH */
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
     GPIO_InitStruct.Alternate = GPIO_AF11_ETH;
     HAL_GPIO_Init(RMII_TXD1_GPIO_Port, &GPIO_InitStruct);
 
     GPIO_InitStruct.Pin = RMII_TX_EN_Pin|RMII_TXD0_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH; /* Must be GPIO_SPEED_FREQ_HIGH */
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
     GPIO_InitStruct.Alternate = GPIO_AF11_ETH;
     HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
 
@@ -208,7 +235,7 @@ void HAL_ETH_MspDeInit(ETH_HandleTypeDef* ethHandle)
     __HAL_RCC_ETH1MAC_CLK_DISABLE();
     __HAL_RCC_ETH1TX_CLK_DISABLE();
     __HAL_RCC_ETH1RX_CLK_DISABLE();
-
+  
     /**ETH GPIO Configuration    
     PC1     ------> ETH_MDC
     PA1     ------> ETH_REF_CLK
@@ -255,14 +282,12 @@ void HAL_ETH_MspDeInit(ETH_HandleTypeDef* ethHandle)
  */
 static void low_level_init(struct netif *netif)
 { 
-	dmc_puts("low_level_init\n");
-
   uint32_t idx = 0;
   HAL_StatusTypeDef hal_eth_init_status;
   
   /* Init ETH */
 
-  uint8_t MACAddr[6] ;
+   uint8_t MACAddr[6] ;
   heth.Instance = ETH;
   MACAddr[0] = 0x00;
   MACAddr[1] = 0x80;
@@ -270,12 +295,6 @@ static void low_level_init(struct netif *netif)
   MACAddr[3] = 0x00;
   MACAddr[4] = 0x00;
   MACAddr[5] = 0x00;
-//  MACAddr[0] = 0xba;
-//  MACAddr[1] = 0xbe;
-//  MACAddr[2] = 0xde;
-//  MACAddr[3] = 0xaf;
-//  MACAddr[4] = 0xbe;
-//  MACAddr[5] = 0xef;
   heth.Init.MACAddr = &MACAddr[0];
   heth.Init.MediaInterface = HAL_ETH_RMII_MODE;
   heth.Init.TxDesc = DMATxDscrTab;
@@ -332,11 +351,9 @@ static void low_level_init(struct netif *netif)
 /* USER CODE END PHY_PRE_CONFIG */
   
   /* Set PHY IO functions */
-  // lan8742.c, 81
   LAN8742_RegisterBusIO(&LAN8742, &LAN8742_IOCtx);
 
   /* Initialize the LAN8742 ETH PHY */
-  // lan8742.c, 106
   LAN8742_Init(&LAN8742);
 
   if (hal_eth_init_status == HAL_OK)
@@ -373,14 +390,12 @@ static void low_level_init(struct netif *netif)
  *
  * @note Returning ERR_MEM here if a DMA queue of your MAC is full can lead to
  *       strange results. You might consider waiting for space in the DMA queue
- *       to become available since the stack doesn't retry to send a packet
+ *       to become availale since the stack doesn't retry to send a packet
  *       dropped because of memory failure (except for the TCP timers).
  */
 
 static err_t low_level_output(struct netif *netif, struct pbuf *p)
 {
-//	dmc_puts("low_level_output\n");
-
    uint32_t i=0, framelen = 0;
   struct pbuf *q;
   err_t errval = ERR_OK;
@@ -433,7 +448,6 @@ static struct pbuf * low_level_input(struct netif *netif)
   ETH_BufferTypeDef RxBuff;
   uint32_t framelength = 0;
   
-//	dmc_puts("low_level_input\n");
   
   if (HAL_ETH_IsRxDataAvailable(&heth))
   {
@@ -476,8 +490,6 @@ void ethernetif_input(struct netif *netif)
   err_t err;
   struct pbuf *p;
 
-//	dmc_puts("ethernetif_input\n");
-
   /* move received packet into a new pbuf */
   p = low_level_input(netif);
     
@@ -496,24 +508,6 @@ void ethernetif_input(struct netif *netif)
   HAL_ETH_BuildRxDescriptors(&heth);
   
 }
-
-
-/* USER CODE BEGIN 8 */
-/**
-  * @brief  This function notify user about link status changement.
-  * @param  netif: the network interface
-  * @retval None
-  */
-__weak void ethernetif_notify_conn_changed(struct netif *netif)
-{
-  /* NOTE : This is function could be implemented in user file
-            when the callback is needed,
-  */
-
-}
-/* USER CODE END 8 */
-//#endif /* LWIP_NETIF_LINK_CALLBACK */
-
 
 #if !LWIP_ARP
 /**
@@ -534,7 +528,6 @@ static err_t low_level_output_arp_off(struct netif *netif, struct pbuf *q, const
   return errval;
   
 }
-
 #endif /* LWIP_ARP */ 
 
 /**
@@ -551,8 +544,6 @@ static err_t low_level_output_arp_off(struct netif *netif, struct pbuf *q, const
  */
 err_t ethernetif_init(struct netif *netif)
 {
-	dmc_puts("ethernetif_init\n");
-
   LWIP_ASSERT("netif != NULL", (netif != NULL));
   
 #if LWIP_NETIF_HOSTNAME
@@ -597,7 +588,6 @@ err_t ethernetif_init(struct netif *netif)
   */
 void pbuf_free_custom(struct pbuf *p)
 {
-//	dmc_puts("pbuf_free_custom\n");
   if(p!=NULL)
   {
     p->flags = 0;
@@ -649,8 +639,7 @@ int32_t ETH_PHY_IO_Init(void)
   /* We assume that MDIO GPIO configuration is already done
      in the ETH_MspInit() else it should be done here 
   */
-//	dmc_puts("ETH_PHY_IO_Init\n");
-
+  
   /* Configure the MDIO Clock */
   HAL_ETH_SetMDIOClockRange(&heth);
   
@@ -664,7 +653,6 @@ int32_t ETH_PHY_IO_Init(void)
   */
 int32_t ETH_PHY_IO_DeInit (void)
 {
-//	dmc_puts("ETH_PHY_IO_DeInit\n");
   return 0;
 }
 
@@ -677,7 +665,6 @@ int32_t ETH_PHY_IO_DeInit (void)
   */
 int32_t ETH_PHY_IO_ReadReg(uint32_t DevAddr, uint32_t RegAddr, uint32_t *pRegVal)
 {
-//	dmc_puts("ETH_PHY_IO_ReadReg\n");
   if(HAL_ETH_ReadPHYRegister(&heth, DevAddr, RegAddr, pRegVal) != HAL_OK)
   {
     return -1;
@@ -695,7 +682,6 @@ int32_t ETH_PHY_IO_ReadReg(uint32_t DevAddr, uint32_t RegAddr, uint32_t *pRegVal
   */
 int32_t ETH_PHY_IO_WriteReg(uint32_t DevAddr, uint32_t RegAddr, uint32_t RegVal)
 {
-//	dmc_puts("ETH_PHY_IO_WriteReg\n");
   if(HAL_ETH_WritePHYRegister(&heth, DevAddr, RegAddr, RegVal) != HAL_OK)
   {
     return -1;
@@ -710,76 +696,22 @@ int32_t ETH_PHY_IO_WriteReg(uint32_t DevAddr, uint32_t RegAddr, uint32_t RegVal)
   */
 int32_t ETH_PHY_IO_GetTick(void)
 {
-//	dmc_puts("ETH_PHY_IO_GetTick\n");
   return HAL_GetTick();
 }
 
 /* USER CODE BEGIN 8 */
-
-/* USER CODE END 8 */
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
-
-
-
 /**
-  * @brief
+  * @brief  This function notify user about link status changement.
+  * @param  netif: the network interface
   * @retval None
   */
-void ethernet_link_check_state(struct netif *netif)
+__weak void ethernetif_notify_conn_changed(struct netif *netif)
 {
-  ETH_MACConfigTypeDef MACConf;
-  uint32_t PHYLinkState;
-  uint32_t linkchanged = 0, speed = 0, duplex =0;
+  /* NOTE : This is function could be implemented in user file
+            when the callback is needed,
+  */
 
-//	dmc_puts("ethernet_link_check_state\n");
-
-  PHYLinkState = LAN8742_GetLinkState(&LAN8742);
-
-  if(netif_is_link_up(netif) && (PHYLinkState <= LAN8742_STATUS_LINK_DOWN))
-  {
-    HAL_ETH_Stop(&heth);
-    netif_set_down(netif);
-    netif_set_link_down(netif);
-  }
-  else if(!netif_is_link_up(netif) && (PHYLinkState > LAN8742_STATUS_LINK_DOWN))
-  {
-    switch (PHYLinkState)
-    {
-    case LAN8742_STATUS_100MBITS_FULLDUPLEX:
-      duplex = ETH_FULLDUPLEX_MODE;
-      speed = ETH_SPEED_100M;
-      linkchanged = 1;
-      break;
-    case LAN8742_STATUS_100MBITS_HALFDUPLEX:
-      duplex = ETH_HALFDUPLEX_MODE;
-      speed = ETH_SPEED_100M;
-      linkchanged = 1;
-      break;
-    case LAN8742_STATUS_10MBITS_FULLDUPLEX:
-      duplex = ETH_FULLDUPLEX_MODE;
-      speed = ETH_SPEED_10M;
-      linkchanged = 1;
-      break;
-    case LAN8742_STATUS_10MBITS_HALFDUPLEX:
-      duplex = ETH_HALFDUPLEX_MODE;
-      speed = ETH_SPEED_10M;
-      linkchanged = 1;
-      break;
-    default:
-      break;
-    }
-
-    if(linkchanged)
-    {
-      /* Get MAC Config MAC */
-      HAL_ETH_GetMACConfig(&heth, &MACConf);
-      MACConf.DuplexMode = duplex;
-      MACConf.Speed = speed;
-      HAL_ETH_SetMACConfig(&heth, &MACConf);
-      HAL_ETH_Start(&heth);
-      netif_set_up(netif);
-      netif_set_link_up(netif);
-    }
-  }
 }
+/* USER CODE END 8 */
+/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
 

@@ -11,7 +11,14 @@
 1. build in Truestudio
 2. flash to the Nucleo-H743ZI
 
-**note**: you can also change the GPIO configuration by STM32CubeMX
+### Generate from STM32CubeMX:
+please check the MPU settings for ethernet DMA, based on following website:
+- https://community.st.com/s/article/FAQ-Ethernet-not-working-on-STM32H7x3
+- https://www.keshikan.net/gohantabeyo/?p=563
+- http://nemuisan.blog.bai.ne.jp/?eid=215813
+- https://www.st.com/content/ccc/resource/technical/document/application_note/group0/bc/2d/f7/bd/fb/3f/48/47/DM00272912/files/DM00272912.pdf/jcr:content/translations/en.DM00272912.pdf
+
+
 
 ## usage:
 
