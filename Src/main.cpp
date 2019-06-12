@@ -67,6 +67,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "lwip/udp.h" /* can not find udp API from lwip.h, why */
 #include "tcp_echoserver.h"
 #include "app_ethernet.h"
 /* USER CODE END Includes */
