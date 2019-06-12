@@ -67,6 +67,7 @@
 	</buildSpec>
 	<natures>
 		<nature>org.eclipse.cdt.core.cnature</nature>
+		<nature>org.eclipse.cdt.core.ccnature</nature>
 		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 	</natures>
@@ -137,11 +138,6 @@
 			<location>PARENT-1-PROJECT_LOC/startup_stm32h743xx.s</location>
 		</link>
 		<link>
-			<name>Application/TrueSTUDIO/syscalls.c</name>
-			<type>1</type>
-			<location>PARENT-1-PROJECT_LOC/syscalls.c</location>
-		</link>
-		<link>
 			<name>Application/User/DMC</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
@@ -197,9 +193,9 @@
 			<location>PARENT-2-PROJECT_LOC/Src/lwip.c</location>
 		</link>
 		<link>
-			<name>Application/User/main.c</name>
+			<name>Application/User/main.cpp</name>
 			<type>1</type>
-			<location>PARENT-2-PROJECT_LOC/Src/main.c</location>
+			<location>PARENT-2-PROJECT_LOC/Src/main.cpp</location>
 		</link>
 		<link>
 			<name>Application/User/rng.c</name>
@@ -460,11 +456,6 @@
 			<name>Middlewares/FatFs/ff_gen_drv.c</name>
 			<type>1</type>
 			<location>PARENT-2-PROJECT_LOC/Middlewares/Third_Party/FatFs/src/ff_gen_drv.c</location>
-		</link>
-		<link>
-			<name>Middlewares/FatFs/syscall.c</name>
-			<type>1</type>
-			<location>PARENT-2-PROJECT_LOC/Middlewares/Third_Party/FatFs/src/option/syscall.c</location>
 		</link>
 		<link>
 			<name>Middlewares/LwIP/api_lib.c</name>

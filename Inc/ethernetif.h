@@ -56,7 +56,9 @@
 
 /* Within 'USER CODE' section, code will be kept by default at each generation */
 /* USER CODE BEGIN 0 */
-
+#ifdef __cplusplus
+extern "C" {
+#endif
 /* USER CODE END 0 */
 
 /* Exported functions ------------------------------------------------------- */
@@ -69,6 +71,10 @@ u32_t sys_now(void);
 
 /* USER CODE BEGIN 1 */
 void ethernet_link_check_state(struct netif *netif);
+
+#ifdef __cplusplus
+}
+#endif
 
 /* USER CODE END 1 */
 #endif

@@ -24,6 +24,12 @@
 #ifndef __KSZ8851SNL_REG_H
 #define __KSZ8851SNL_REG_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
+
 #define REG_ADDR_MASK              		0x3F0		/* Register address mask */
 #define OPCODE_MASK                		(3 << 14)
 #define CMD_READ                   		(0 << 14)
@@ -798,6 +804,9 @@
 
 #define READ_UNSAFE_REGISTERS       0
 
+#ifdef __cplusplus
+}
+#endif
 
 
 #endif
