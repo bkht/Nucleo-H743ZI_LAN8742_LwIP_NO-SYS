@@ -69,6 +69,7 @@
 /* USER CODE BEGIN Includes */
 #include "lwip/udp.h" /* can not find udp API from lwip.h, why */
 #include "tcp_echoserver.h"
+#include "udp_echoserver.h"
 #include "app_ethernet.h"
 /* USER CODE END Includes */
 
@@ -120,7 +121,7 @@ int main(void)
   /* USER CODE END 1 */
 
   /* MPU Configuration--------------------------------------------------------*/
-  MPU_Config();
+	MPU_Config();
 
   /* Enable I-Cache---------------------------------------------------------*/
   SCB_EnableICache();
@@ -167,7 +168,8 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   /* TCP echo server Init */
-  tcp_echoserver_init();
+  //tcp_echoserver_init();
+  udp_echoserver_init();
 
   struct udp_pcb *pcb;
     struct pbuf *p;
@@ -208,7 +210,7 @@ int main(void)
           p = pbuf_alloc(PBUF_TRANSPORT, sizeof(4), PBUF_RAM);
           *(uint32_t *)p->payload = cnt++;
           p->len = 4;
-          err = udp_sendto(pcb, p, &dst_addr, dst_port);
+          //err = udp_sendto(pcb, p, &dst_addr, dst_port);
           t = HAL_GetTick();
           pbuf_free(p);
         }

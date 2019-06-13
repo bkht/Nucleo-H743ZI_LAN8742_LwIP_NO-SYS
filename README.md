@@ -30,9 +30,16 @@ please check the MPU settings for ethernet DMA, based on following website:
 $ python3 Scripts/socket_udp_receive.py
 ```
 
-5. perform TCP receive test:
+5. perform TCP echo test:
 
 ```
 $ python3 Scripts/socket_tcp_send.py
 ```
 
+
+
+5. perform UDP echo test:
+
+```
+$ python3 Scripts/socket_udp_send.py
+```

@@ -228,6 +228,11 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Src/tcp_echoserver.c</locationURI>
 		</link>
 		<link>
+			<name>Application/User/udp_echoserver.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Src/udp_echoserver.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/tim.c</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Src/tim.c</locationURI>

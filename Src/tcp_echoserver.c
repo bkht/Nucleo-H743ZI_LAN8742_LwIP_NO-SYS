@@ -227,14 +227,14 @@ static err_t tcp_echoserver_recv(void *arg, struct tcp_pcb *tpcb, struct pbuf *p
     tcp_sent(tpcb, tcp_echoserver_sent);
     
     /* send back the received data (echo) */
-    tcp_echoserver_send(tpcb, es);
+   tcp_echoserver_send(tpcb, es);
     
     ret_err = ERR_OK;
   }
   else if (es->state == ES_RECEIVED)
   {
 		dmc_puts("ES_RECEIVED\n");
-    /* more data received from client and previous data has been already sent*/
+		/* more data received from client and previous data has been already sent*/
     if(es->p == NULL)
     {
       es->p = p;
@@ -242,7 +242,7 @@ static err_t tcp_echoserver_recv(void *arg, struct tcp_pcb *tpcb, struct pbuf *p
 //      dmc_puts("buffer:\n");
 //      dmc_puts(p);
       /* send back received data */
-      tcp_echoserver_send(tpcb, es);
+      tcp_echoserver_send(tpcb, es); // can comment out, not efffect
     }
     else
     {
