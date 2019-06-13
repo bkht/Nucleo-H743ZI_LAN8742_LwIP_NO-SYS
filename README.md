@@ -2,8 +2,8 @@
 
 ## requirement:
 
-1. [STM32CubeMX](https://www.st.com/ja/development-tools/stm32cubemx.html)
-2. [Truestudio](https://www.st.com/ja/development-tools/truestudio.html)
+1. [STM32CubeMX](https://www.st.com/ja/development-tools/stm32cubemx.html), please use the version of **v5.0.1**, and the version of `STM32H7` is **v1.3.0**.
+2. [Truestudio](https://www.st.com/ja/development-tools/truestudio.html), please use version of **9.3.0**, otherwise, the flash would fail.
 3. [Nucleo-H743ZI](https://www.st.com/ja/evaluation-tools/nucleo-h743zi.html)
 
 ## compile:
