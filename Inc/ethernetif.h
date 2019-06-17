@@ -71,6 +71,8 @@ u32_t sys_now(void);
 
 /* USER CODE BEGIN 1 */
 void ethernet_link_check_state(struct netif *netif);
+void pbuf_free_custom(struct pbuf *p);
+
 
 #ifdef __cplusplus
 }

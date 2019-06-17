@@ -51,8 +51,6 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "adc.h"
-#include "bdma.h"
-#include "dma.h"
 #include "fatfs.h"
 #include "i2c.h"
 #include "iwdg.h"
@@ -62,7 +60,6 @@
 #include "spi.h"
 #include "tim.h"
 #include "usart.h"
-#include "usb_device.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -121,7 +118,7 @@ int main(void)
   /* USER CODE END 1 */
 
   /* MPU Configuration--------------------------------------------------------*/
-	MPU_Config();
+  MPU_Config();
 
   /* Enable I-Cache---------------------------------------------------------*/
   SCB_EnableICache();
@@ -147,8 +144,6 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_BDMA_Init();
-  MX_DMA_Init();
   MX_USART3_UART_Init();
   MX_RNG_Init();
   MX_IWDG1_Init();
@@ -164,7 +159,6 @@ int main(void)
   MX_UART5_Init();
   MX_RTC_Init();
   MX_FATFS_Init();
-  MX_USB_DEVICE_Init();
   /* USER CODE BEGIN 2 */
 
   /* TCP echo server Init */
@@ -172,19 +166,19 @@ int main(void)
   udp_echoserver_init();
 
   struct udp_pcb *pcb;
-    struct pbuf *p;
-    err_t err;
-    ip4_addr_t dst_addr;
-    const unsigned short src_port = 12345;
-    const unsigned short dst_port = 12345;
+  struct pbuf *p;
+  err_t err;
+  ip4_addr_t dst_addr;
+  const unsigned short src_port = 12345;
+  const unsigned short dst_port = 12345;
 
-    IP4_ADDR(&dst_addr,192,168,25,100);
+  IP4_ADDR(&dst_addr,192,168,25,100);
 
-    pcb = udp_new();
-    err = udp_bind(pcb, IP_ADDR_ANY, src_port);
+  pcb = udp_new();
+  err = udp_bind(pcb, IP_ADDR_ANY, src_port);
 
-    uint32_t cnt = 0;
-    uint32_t t = HAL_GetTick();
+  uint32_t cnt = 0;
+  uint32_t t = HAL_GetTick();
 
   /* USER CODE END 2 */
 
@@ -194,26 +188,7 @@ int main(void)
     {
       HAL_IWDG_Refresh(&hiwdg1);
 
-      MX_LWIP_Process();
-
-      HAL_Delay(2);
-
-      /* Read a received packet from the Ethernet buffers and send it
-         to the lwIP for handling */
-      //ethernetif_input(&gnetif);
-      /* Handle timeouts */
-      //sys_check_timeouts();
-
-      /* UDP */
-      if(HAL_GetTick() - t > 1000)
-        {
-          p = pbuf_alloc(PBUF_TRANSPORT, sizeof(4), PBUF_RAM);
-          *(uint32_t *)p->payload = cnt++;
-          p->len = 4;
-          //err = udp_sendto(pcb, p, &dst_addr, dst_port);
-          t = HAL_GetTick();
-          pbuf_free(p);
-        }
+      HAL_Delay(1);
 
 #if LWIP_NETIF_LINK_CALLBACK
       Ethernet_Link_Periodic_Handle(&gnetif);

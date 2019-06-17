@@ -336,7 +336,7 @@ static void low_level_init(struct netif *netif)
   
   /* maximum transfer unit */
   netif->mtu = 1500;
-  
+
   /* Accept broadcast address and ARP traffic */
   /* don't set NETIF_FLAG_ETHARP if this device is not an ethernet one */
   #if LWIP_ARP
@@ -347,7 +347,24 @@ static void low_level_init(struct netif *netif)
   
 
 /* USER CODE BEGIN PHY_PRE_CONFIG */ 
-    
+    // use interrupt mode
+  /* Set PHY IO functions */
+
+  LAN8742_RegisterBusIO(&LAN8742, &LAN8742_IOCtx);
+  LAN8742_Init(&LAN8742);
+
+  if (hal_eth_init_status == HAL_OK)
+  {
+    netif_set_up(netif);
+    netif_set_link_up(netif);
+    HAL_ETH_Start_IT(&heth);
+  }
+  else
+  {
+    Error_Handler();
+  }
+  return;
+
 /* USER CODE END PHY_PRE_CONFIG */
   
   /* Set PHY IO functions */
@@ -368,7 +385,7 @@ static void low_level_init(struct netif *netif)
   }
 
 /* USER CODE BEGIN PHY_POST_CONFIG */ 
-    
+
 /* USER CODE END PHY_POST_CONFIG */
 
 #endif /* LWIP_ARP || LWIP_ETHERNET */
