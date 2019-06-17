@@ -46,8 +46,6 @@
 									<listOptionValue builtIn="false" value="../../../Middlewares/Third_Party/FatFs/src"/>
 									<listOptionValue builtIn="false" value="../../../Drivers/BSP/Components/lan8742"/>
 									<listOptionValue builtIn="false" value="../../../Middlewares/Third_Party/LwIP/src/include/netif/ppp"/>
-									<listOptionValue builtIn="false" value="../../../Middlewares/ST/STM32_USB_Device_Library/Core/Inc"/>
-									<listOptionValue builtIn="false" value="../../../Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Inc"/>
 									<listOptionValue builtIn="false" value="../../../Drivers/CMSIS/Device/ST/STM32H7xx/Include"/>
 									<listOptionValue builtIn="false" value="../../../Middlewares/Third_Party/LwIP/src/include/lwip"/>
 									<listOptionValue builtIn="false" value="../../../Middlewares/Third_Party/LwIP/src/include/lwip/apps"/>
@@ -121,8 +119,6 @@
 									<listOptionValue builtIn="false" value="../../../Middlewares/Third_Party/FatFs/src"/>
 									<listOptionValue builtIn="false" value="../../../Drivers/BSP/Components/lan8742"/>
 									<listOptionValue builtIn="false" value="../../../Middlewares/Third_Party/LwIP/src/include/netif/ppp"/>
-									<listOptionValue builtIn="false" value="../../../Middlewares/ST/STM32_USB_Device_Library/Core/Inc"/>
-									<listOptionValue builtIn="false" value="../../../Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Inc"/>
 									<listOptionValue builtIn="false" value="../../../Drivers/CMSIS/Device/ST/STM32H7xx/Include"/>
 									<listOptionValue builtIn="false" value="../../../Middlewares/Third_Party/LwIP/src/include/lwip"/>
 									<listOptionValue builtIn="false" value="../../../Middlewares/Third_Party/LwIP/src/include/lwip/apps"/>
@@ -215,8 +211,6 @@
 									<listOptionValue builtIn="false" value="../../../Middlewares/Third_Party/FatFs/src"/>
 									<listOptionValue builtIn="false" value="../../../Drivers/BSP/Components/lan8742"/>
 									<listOptionValue builtIn="false" value="../../../Middlewares/Third_Party/LwIP/src/include/netif/ppp"/>
-									<listOptionValue builtIn="false" value="../../../Middlewares/ST/STM32_USB_Device_Library/Core/Inc"/>
-									<listOptionValue builtIn="false" value="../../../Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Inc"/>
 									<listOptionValue builtIn="false" value="../../../Drivers/CMSIS/Device/ST/STM32H7xx/Include"/>
 									<listOptionValue builtIn="false" value="../../../Middlewares/Third_Party/LwIP/src/include/lwip"/>
 									<listOptionValue builtIn="false" value="../../../Middlewares/Third_Party/LwIP/src/include/lwip/apps"/>

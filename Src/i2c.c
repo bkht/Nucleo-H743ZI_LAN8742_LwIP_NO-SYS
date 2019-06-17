@@ -56,10 +56,6 @@
 
 I2C_HandleTypeDef hi2c2;
 I2C_HandleTypeDef hi2c4;
-DMA_HandleTypeDef hdma_i2c2_rx;
-DMA_HandleTypeDef hdma_i2c2_tx;
-DMA_HandleTypeDef hdma_i2c4_rx;
-DMA_HandleTypeDef hdma_i2c4_tx;
 
 /* I2C2 init function */
 void MX_I2C2_Init(void)
@@ -148,49 +144,6 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef* i2cHandle)
 
     /* I2C2 clock enable */
     __HAL_RCC_I2C2_CLK_ENABLE();
-  
-    /* I2C2 DMA Init */
-    /* I2C2_RX Init */
-    hdma_i2c2_rx.Instance = DMA2_Stream3;
-    hdma_i2c2_rx.Init.Request = DMA_REQUEST_I2C2_RX;
-    hdma_i2c2_rx.Init.Direction = DMA_PERIPH_TO_MEMORY;
-    hdma_i2c2_rx.Init.PeriphInc = DMA_PINC_DISABLE;
-    hdma_i2c2_rx.Init.MemInc = DMA_MINC_ENABLE;
-    hdma_i2c2_rx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
-    hdma_i2c2_rx.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
-    hdma_i2c2_rx.Init.Mode = DMA_NORMAL;
-    hdma_i2c2_rx.Init.Priority = DMA_PRIORITY_LOW;
-    hdma_i2c2_rx.Init.FIFOMode = DMA_FIFOMODE_DISABLE;
-    if (HAL_DMA_Init(&hdma_i2c2_rx) != HAL_OK)
-    {
-      Error_Handler();
-    }
-
-    __HAL_LINKDMA(i2cHandle,hdmarx,hdma_i2c2_rx);
-
-    /* I2C2_TX Init */
-    hdma_i2c2_tx.Instance = DMA2_Stream4;
-    hdma_i2c2_tx.Init.Request = DMA_REQUEST_I2C2_TX;
-    hdma_i2c2_tx.Init.Direction = DMA_MEMORY_TO_PERIPH;
-    hdma_i2c2_tx.Init.PeriphInc = DMA_PINC_DISABLE;
-    hdma_i2c2_tx.Init.MemInc = DMA_MINC_ENABLE;
-    hdma_i2c2_tx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
-    hdma_i2c2_tx.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
-    hdma_i2c2_tx.Init.Mode = DMA_NORMAL;
-    hdma_i2c2_tx.Init.Priority = DMA_PRIORITY_LOW;
-    hdma_i2c2_tx.Init.FIFOMode = DMA_FIFOMODE_DISABLE;
-    if (HAL_DMA_Init(&hdma_i2c2_tx) != HAL_OK)
-    {
-      Error_Handler();
-    }
-
-    __HAL_LINKDMA(i2cHandle,hdmatx,hdma_i2c2_tx);
-
-    /* I2C2 interrupt Init */
-    HAL_NVIC_SetPriority(I2C2_EV_IRQn, 0, 0);
-    HAL_NVIC_EnableIRQ(I2C2_EV_IRQn);
-    HAL_NVIC_SetPriority(I2C2_ER_IRQn, 0, 0);
-    HAL_NVIC_EnableIRQ(I2C2_ER_IRQn);
   /* USER CODE BEGIN I2C2_MspInit 1 */
 
   /* USER CODE END I2C2_MspInit 1 */
@@ -215,47 +168,6 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef* i2cHandle)
 
     /* I2C4 clock enable */
     __HAL_RCC_I2C4_CLK_ENABLE();
-  
-    /* I2C4 DMA Init */
-    /* I2C4_RX Init */
-    hdma_i2c4_rx.Instance = BDMA_Channel0;
-    hdma_i2c4_rx.Init.Request = BDMA_REQUEST_I2C4_RX;
-    hdma_i2c4_rx.Init.Direction = DMA_PERIPH_TO_MEMORY;
-    hdma_i2c4_rx.Init.PeriphInc = DMA_PINC_DISABLE;
-    hdma_i2c4_rx.Init.MemInc = DMA_MINC_ENABLE;
-    hdma_i2c4_rx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
-    hdma_i2c4_rx.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
-    hdma_i2c4_rx.Init.Mode = DMA_NORMAL;
-    hdma_i2c4_rx.Init.Priority = DMA_PRIORITY_LOW;
-    if (HAL_DMA_Init(&hdma_i2c4_rx) != HAL_OK)
-    {
-      Error_Handler();
-    }
-
-    __HAL_LINKDMA(i2cHandle,hdmarx,hdma_i2c4_rx);
-
-    /* I2C4_TX Init */
-    hdma_i2c4_tx.Instance = BDMA_Channel1;
-    hdma_i2c4_tx.Init.Request = BDMA_REQUEST_I2C4_TX;
-    hdma_i2c4_tx.Init.Direction = DMA_MEMORY_TO_PERIPH;
-    hdma_i2c4_tx.Init.PeriphInc = DMA_PINC_DISABLE;
-    hdma_i2c4_tx.Init.MemInc = DMA_MINC_ENABLE;
-    hdma_i2c4_tx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
-    hdma_i2c4_tx.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
-    hdma_i2c4_tx.Init.Mode = DMA_NORMAL;
-    hdma_i2c4_tx.Init.Priority = DMA_PRIORITY_LOW;
-    if (HAL_DMA_Init(&hdma_i2c4_tx) != HAL_OK)
-    {
-      Error_Handler();
-    }
-
-    __HAL_LINKDMA(i2cHandle,hdmatx,hdma_i2c4_tx);
-
-    /* I2C4 interrupt Init */
-    HAL_NVIC_SetPriority(I2C4_EV_IRQn, 0, 0);
-    HAL_NVIC_EnableIRQ(I2C4_EV_IRQn);
-    HAL_NVIC_SetPriority(I2C4_ER_IRQn, 0, 0);
-    HAL_NVIC_EnableIRQ(I2C4_ER_IRQn);
   /* USER CODE BEGIN I2C4_MspInit 1 */
 
   /* USER CODE END I2C4_MspInit 1 */
@@ -279,13 +191,6 @@ void HAL_I2C_MspDeInit(I2C_HandleTypeDef* i2cHandle)
     */
     HAL_GPIO_DeInit(GPIOF, GPIO_PIN_0|GPIO_PIN_1);
 
-    /* I2C2 DMA DeInit */
-    HAL_DMA_DeInit(i2cHandle->hdmarx);
-    HAL_DMA_DeInit(i2cHandle->hdmatx);
-
-    /* I2C2 interrupt Deinit */
-    HAL_NVIC_DisableIRQ(I2C2_EV_IRQn);
-    HAL_NVIC_DisableIRQ(I2C2_ER_IRQn);
   /* USER CODE BEGIN I2C2_MspDeInit 1 */
 
   /* USER CODE END I2C2_MspDeInit 1 */
@@ -304,13 +209,6 @@ void HAL_I2C_MspDeInit(I2C_HandleTypeDef* i2cHandle)
     */
     HAL_GPIO_DeInit(GPIOD, GPIO_PIN_12|GPIO_PIN_13);
 
-    /* I2C4 DMA DeInit */
-    HAL_DMA_DeInit(i2cHandle->hdmarx);
-    HAL_DMA_DeInit(i2cHandle->hdmatx);
-
-    /* I2C4 interrupt Deinit */
-    HAL_NVIC_DisableIRQ(I2C4_EV_IRQn);
-    HAL_NVIC_DisableIRQ(I2C4_ER_IRQn);
   /* USER CODE BEGIN I2C4_MspDeInit 1 */
 
   /* USER CODE END I2C4_MspDeInit 1 */
