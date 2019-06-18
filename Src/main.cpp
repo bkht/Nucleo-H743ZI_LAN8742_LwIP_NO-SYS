@@ -188,6 +188,8 @@ int main(void)
     {
       HAL_IWDG_Refresh(&hiwdg1);
 
+      /* for etherent timeouts */
+      sys_check_timeouts();
       HAL_Delay(1);
 
 #if LWIP_NETIF_LINK_CALLBACK

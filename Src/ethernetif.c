@@ -357,6 +357,11 @@ static void low_level_init(struct netif *netif)
   {
     netif_set_up(netif);
     netif_set_link_up(netif);
+    ETH_MACConfigTypeDef MACConf;
+    HAL_ETH_GetMACConfig(&heth, &MACConf);
+    MACConf.DuplexMode = ETH_FULLDUPLEX_MODE;
+    MACConf.Speed = ETH_SPEED_100M;
+    HAL_ETH_SetMACConfig(&heth, &MACConf);
     HAL_ETH_Start_IT(&heth);
   }
   else
